@@ -1,0 +1,21 @@
+<ion-view view-title="Dashboard">
+  <ion-content class="padding">
+    <button ng-click="listSongs()" class="btn btn-positive">List Songs</button>
+    <button ng-click="initializeQueue()" class="btn btn-positive">Initialize Queue</button>
+    <button ng-click="play()" class="btn btn-positive">Play</button>
+    <button ng-click="pause()" class="btn btn-positive">Pause</button>
+    
+    
+    <div class="list" >
+        
+        <a class="item item-thumbnail-left" ng-repeat="x in lol" href="#">
+            <img src="data:image/png;base64,{{x.image}}">
+                <h2>{{x.title}}</h2>
+                <p>{{x.artist}}</p>
+                <p>{{x.title}}</p>
+                <p>Duration: {{x.duration/60 | number:2}}</p>
+                </a>
+        
+    </div>
+  </ion-content>
+</ion-view>
