@@ -15,6 +15,8 @@ exports.pause = function(success, error) {
 }
 
 exports.initQueue = function(id, success, error) {
-    exec(success, error, "AudioLibrary", "initQueue", [id + ""]);
+               exec(function(items) {
+                    success(items.constructor == String ? JSON.parse(items) : items);
+                    }, error, "AudioLibrary", "initQueue", [id + ""]);
 }
 });

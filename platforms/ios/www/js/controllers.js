@@ -1,72 +1,63 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {
+.controller('DashCtrl', function($scope,$ionicLoading) {
             
+            $scope.show = function() {
+            $ionicLoading.show({
+                               template: 'Loading...'
+                               }).then(function(){
+                                       console.log("The loading indicator is now displayed");
+                                       });
+            };
+            $scope.hide = function(){
+            $ionicLoading.hide().then(function(){
+                                      console.log("The loading indicator is now hidden");
+                                      });
+            };
+            
+            
+            
+            $scope.$on('$ionicView.enter', function(){
+                       // Any thing you can think of
+                       //alert("This function just ran away");
+                      // $scope.show();
             $scope.lol = [{
                           "title":"The A Team",
                           "id":"6620622103407453255",
                           "duration":261.093,
                           "path":"ipod-library://item/item.mp3?id=6620622103407453255",
                           "artist":"Ed Sheeran"
-                          },
-                          {
-                          "title":"Aicha",
-                          "id":"6620622103407453281",
-                          "duration":256.496,
-                          "path":"ipod-library://item/item.mp3?id=6620622103407453281",
-                          "artist":"Khaled"
-                          },
-                          {  
-                          "title":"All My Friends (feat. Tinashe & Chance The Rapper)",
-                          "id":"4992972861530656772",
-                          "duration":229.799,
-                          "path":"ipod-library://item/item.mp3?id=4992972861530656772",
-                          "artist":"SNAKEHIPS"
                           }];
             $scope.images = [];
+            console.log("before enter");
+            setTimeout(function() { $scope.listSongs(); }, 5);
+            
+            });
             
             $scope.listSongs = function(){
+            //alert("list songs");
             window.cordova.plugins.AudioLibrary.getItems(function(items) {
-                                                         console.log(items[0]);
-                                                         
-//                                                         for(var i=0;i<items.length;i++){
-//                                                         $scope.lol.push(items[i]);
-//                                                         
-//                                                         var image = new Image();
-//                                                         image.src = 'data:image/png;base64,'+items[i].image;
-//                                                         
-//                                                         $scope.images.push(image);
-//                                                         $scope.$apply();
-//                                                         }
                                                          $scope.lol = items.slice();
                                                          $scope.$apply();
-                                                         
-                                                         //console.log($scope.lol);
-                                                         //var image = new Image();
-                                                         //image.src = 'data:image/png;base64,'+items[0].image;
-                                                         
-                                                         //$scope.array.push(image);
-                                                         
-                                                         //$scope.array.push(image);
-                                                         //document.body.appendChild(image);
-                                                         
-                                                         //document.getElementById('image').appendChild(image);
-                                                         
-                                                         window.cordova.plugins.AudioLibrary.initQueue(items[0].id, function() {
-                                                                                                       // playing queue is initialized, call #play to start playing from the first song.
-                                                                                                       console.log("Queued..");
-                                                                                                       
-                                                                                                       });
                                                          });
             };
             
-            $scope.initializeQueue = function(){
-            window.cordova.plugins.AudioLibrary.initQueue(items[0].id, function() {
+            $scope.queueAndPlay = function(index){
+            //console.log($scope.lol[index].id);
+            window.cordova.plugins.AudioLibrary.initQueue($scope.lol[index].id,
+                                                          function(res) {
                                                           // playing queue is initialized, call #play to start playing from the first song.
-                                                          console.log("Queued..");
-
+                                                          console.log("Queued.. "+res);
                                                           });
             };
+            
+//            $scope.initializeQueue = function(){
+//            window.cordova.plugins.AudioLibrary.initQueue(items[0].id, function() {
+//                                                          // playing queue is initialized, call #play to start playing from the first song.
+//                                                          console.log("Queued..");
+//
+//                                                          });
+//            };
             
             $scope.play = function(){
             window.cordova.plugins.AudioLibrary.play(function() {
@@ -74,6 +65,12 @@ angular.module('starter.controllers', [])
                                                      console.log("Playing..");
                                                      });
             };
+            
+            $scope.pause = function(){
+            window.cordova.plugins.AudioLibrary.pause(function() {
+                                                      // song is paused.
+                                                      });
+            }
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {

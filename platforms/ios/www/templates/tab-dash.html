@@ -1,4 +1,4 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="Dashboard" >
   <ion-content class="padding">
     <button ng-click="listSongs()" class="btn btn-positive">List Songs</button>
     <button ng-click="initializeQueue()" class="btn btn-positive">Initialize Queue</button>
@@ -8,7 +8,7 @@
     
     <div class="list" >
         
-        <a class="item item-thumbnail-left" ng-repeat="x in lol" href="#">
+        <a class="item item-thumbnail-left" ng-click="queueAndPlay($index)" ng-repeat="x in lol" href="#">
             <img src="data:image/png;base64,{{x.image}}">
                 <h2>{{x.title}}</h2>
                 <p>{{x.artist}}</p>
